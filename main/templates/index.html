@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container{
+            display: flex;
+        }
+        #login{
+            margin-left: 20%;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="registration">
+            <h1>Registration</h1>
+            <form action="/register" method="post">
+                {% csrf_token %}
+                First Name <input type="text" name="first_name" id="first_name"><br>
+                Last Name <input type="text" name="last_name" id="last_name"><br>
+                Birthday <input type="date" name="birthday" id="birthday"><br>
+                Email <input type="email" name="email" id="email"><br>
+                Password <input type="password" name="password" id="password"><br>
+                Confirm PW <input type="password" name="confirm_password" id="comfirm_password"><br>
+                <button type="submit">Register</button>
+            </form>
+
+            {% if request.session.type == 1 %}                           
+                {% if messages %}
+                    <ul class="messages">    
+                        {% for message in messages %}    
+                            <li> {{ message }}</li>    
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endif %}
+
+        </div>
+        <div id="login">
+            <h1> Log In</h1>
+            <form action="/login" method="post">
+                {% csrf_token %}
+                Email <input type="email" name="email" id="email"><br>
+                Password <input type="password" name="password" id="password"><br>
+                <button type="submit">Log In</button>
+            </form>
+
+            {% if request.session.type == 2 %}                           
+                {% if messages %}
+                    <ul class="messages">    
+                        {% for message in messages %}    
+                            <li> {{ message }}</li>    
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endif %}
+
+           
+        </div>
+    </div>
+</body>
+</html>

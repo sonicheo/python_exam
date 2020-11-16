@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        header{
+            display: flex;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="container">
+        <header>
+            <div id="success">
+                <h2>Success! Welcome, {{user.first_name}}! </h2>
+            </div>
+            <a href="http://localhost:8000/logout"> Logout</a>
+            <a href="http://localhost:8000/jobs/new"> <button> New Job!</button></a>
+    
+        </header>
+
+        <h3>Everyone's jobs:</h3>
+        <table>
+            <tr>
+                <th>Job</th>
+                <th>Location</th>
+                <th>Actions</th>
+            </tr>
+            {% for job in jobs %}
+                {% if job.worked_on == False %}
+                <tr>
+                    <th> {{job.title}}  </th>
+                    <th> {{job.location}} </th>
+                    <th>
+                        <a href="http://localhost:8000/jobs/{{job.id}}"> View </a>
+                        {% if job.users.first.id == user.id %}
+                            | <a href="http://localhost:8000/jobs/remove/{{job.id}}"> Remove </a>
+                            | <a href="http://localhost:8000/jobs/edit/{{job.id}}"> Edit </a>
+                        {% endif %}    
+                        | <a href="http://localhost:8000/jobs/add/{{job.id}}"> Add </a>
+                    </th>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+
+        <h3> {{user.first_name}}'s jobs </h3>
+        <table>
+            <tr>
+                <th>Job</th>
+                <th>Actions</th>
+            </tr>
+            {% for job in user.job.all %}
+                {% if job.worked_on == True %}
+                    <tr>
+                        <th>
+                            {{job.title}}
+                        </th>
+                        <th>
+                            <a href="http://localhost:8000/jobs/{{job.id}}"> View </a>
+                            | <a href="http://localhost:8000/jobs/remove/{{job.id}}"> Done </a>
+                            | <a href="http://localhost:8000/jobs/giveup/{{job.id}} "> Give Up</a>
+                        </th>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

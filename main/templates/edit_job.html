@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        header{
+            display: flex;
+        }
+        a{
+            margin-left: 20%;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <header>
+            <div id="success">
+                <h2>Hello! {{user.first_name}}! Let's edit your job! </h2>
+            </div>
+            <a href="http://localhost:8000/logout"> Logout</a>
+        </header>                         
+            {% if messages %}
+                <ul class="messages">    
+                    {% for message in messages %}    
+                        <li> {{ message }}</li>    
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        <main>
+            <form action="/jobs/edit/process/{{job.id}}" method="post">
+                {% csrf_token %}
+                Title : <input type="text" name="title" id="title" value="{{job.title}}" required><br>
+                Description : <input type="text" name="desc" id="desc" value="{{job.desc}}" required><br>
+                Location: <input type="text" name="location" id="location" value="{{job.location}}" required><br>
+                <a href="http://localhost:8000/dashboard"> 
+                    Cancel
+                </a>
+                <button type="submit"> Submit </button>
+            </form>
+        </main>
+    </div>
+    
+</body>
+</html>
